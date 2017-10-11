@@ -1,0 +1,5 @@
+br/com/jnetocurti/jaxrs/endpoint/SampleApplication.class
+br/com/jnetocurti/jaxrs/endpoint/Books.class
+br/com/jnetocurti/jaxrs/domain/Book.class
+br/com/jnetocurti/jaxrs/domain/Book$1.class
+br/com/jnetocurti/jaxrs/domain/Book$Builder.class
