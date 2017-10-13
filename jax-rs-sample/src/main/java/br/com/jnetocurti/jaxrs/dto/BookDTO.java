@@ -1,8 +1,8 @@
-package br.com.jnetocurti.jaxrs.domain;
+package br.com.jnetocurti.jaxrs.dto;
 
 import javax.annotation.Generated;
 
-public class Book {
+public class BookDTO {
 
 	private int id;
 
@@ -10,11 +10,11 @@ public class Book {
 
 	private String author;
 
-	public Book() {
+	public BookDTO() {
 	}
 
 	@Generated("SparkTools")
-	private Book(Builder builder) {
+	private BookDTO(Builder builder) {
 		this.id = builder.id;
 		this.title = builder.title;
 		this.author = builder.author;
@@ -60,14 +60,14 @@ public class Book {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Book other = (Book) obj;
+		BookDTO other = (BookDTO) obj;
 		if (id != other.id)
 			return false;
 		return true;
 	}
 
 	/**
-	 * Creates builder to build {@link Book}.
+	 * Creates builder to build {@link BookDTO}.
 	 * 
 	 * @return created builder
 	 */
@@ -77,7 +77,7 @@ public class Book {
 	}
 
 	/**
-	 * Builder to build {@link Book}.
+	 * Builder to build {@link BookDTO}.
 	 */
 	@Generated("SparkTools")
 	public static final class Builder {
@@ -103,8 +103,8 @@ public class Book {
 			return this;
 		}
 
-		public Book build() {
-			return new Book(this);
+		public BookDTO build() {
+			return new BookDTO(this);
 		}
 	}
 
