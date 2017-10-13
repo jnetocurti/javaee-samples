@@ -1,15 +1,19 @@
 version: '3'
-
 services:
 
   wildfly:
-  
     build: 
       ./server
-      
     ports: 
       - "9990:9990"
       - "8080:8080"
-      
     container_name:
       javaee-samples-server
+      
+  postgres:
+    build: 
+      ./database
+    ports: 
+      - "5432:5432"
+    container_name:
+      javaee-samples-database  

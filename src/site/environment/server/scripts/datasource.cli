@@ -1,0 +1,9 @@
+/connect
+/subsystem=datasources/jdbc-driver=postgresql:add(driver-name=postgresql, driver-module-name=org.postgresql, driver-class-name=org.postgresql.Driver)
+/subsystem=datasources/data-source=javaeesamplesDS:add(jndi-name=java:/javaeesamplesDS, driver-name=postgresql, user-name=javaeesamples, password=javaeesamples, connection-url=jdbc:postgresql://postgres:5432/javaeesamples)
+
+
+
+
+
+
