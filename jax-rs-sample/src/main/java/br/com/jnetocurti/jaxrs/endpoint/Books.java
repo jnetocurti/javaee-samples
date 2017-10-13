@@ -27,7 +27,6 @@ public class Books {
 	@Path("/books")
 	@Produces(value = MediaType.APPLICATION_JSON)
 	public Collection<Book> getBooks() {
-
 		return books;
 	}
 

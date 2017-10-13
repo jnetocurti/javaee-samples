@@ -1,20 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
 	<modelVersion>4.0.0</modelVersion>
+
 	<parent>
 		<artifactId>javaee-samples</artifactId>
 		<groupId>br.com.jnetocurti</groupId>
 		<version>1.0</version>
 	</parent>
+
 	<artifactId>jax-rs-sample</artifactId>
 	<groupId>org.jax.rs.sample</groupId>
 	<version>1.0.0-SNAPSHOT</version>
+
 	<packaging>war</packaging>
+
+	<name>javaee-samples - jax-rs-sample</name>
 
 	<properties>
 		<failOnMissingWebXml>false</failOnMissingWebXml>
 	</properties>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jaxrs</artifactId>
+		</dependency>
+
+		<!-- TEST DEPENDENCIES -->
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-client</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.arquillian.extension</groupId>
+			<artifactId>arquillian-rest-client-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.arquillian.extension</groupId>
+			<artifactId>arquillian-rest-client-impl-3x</artifactId>
+		</dependency>
+
+	</dependencies>
+
+	<dependencyManagement>
+		<dependencies>
+
+			<!-- TEST DEPENDENCIES -->
+			<dependency>
+				<groupId>org.jboss.resteasy</groupId>
+				<artifactId>resteasy-client</artifactId>
+				<version>3.1.2.Final</version>
+				<scope>test</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.jboss.arquillian.extension</groupId>
+				<artifactId>arquillian-rest-client-api</artifactId>
+				<version>1.0.0.Alpha4</version>
+				<scope>test</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.jboss.arquillian.extension</groupId>
+				<artifactId>arquillian-rest-client-impl-3x</artifactId>
+				<version>1.0.0.Alpha4</version>
+				<scope>test</scope>
+				<exclusions>
+					<exclusion>
+						<groupId>org.jboss.resteasy</groupId>
+						<artifactId>resteasy-client</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+		</dependencies>
+	</dependencyManagement>
 
 	<build>
 		<finalName>jax-rs-sample</finalName>
@@ -24,21 +89,8 @@
 				<artifactId>maven-war-plugin</artifactId>
 			</plugin>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-deploy-plugin</artifactId>
-				<configuration>
-
-				</configuration>
-			</plugin>
-			<plugin>
 				<groupId>org.wildfly.plugins</groupId>
 				<artifactId>wildfly-maven-plugin</artifactId>
-				<configuration>
-					<hostname>localhost</hostname>
-					<port>9990</port>
-					<username>admin</username>
-					<password>admin</password>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>
