@@ -15,6 +15,7 @@
 
 	<modules>
 		<module>jax-rs-sample</module>
+		<module>jpa-sample</module>
 	</modules>
 
 	<properties>

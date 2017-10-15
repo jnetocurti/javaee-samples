@@ -2,7 +2,7 @@
 
 Samples of Java EE Applications
 
-## Getting Started
+## Prerequisites
 
 - [Git](https://git-scm.com/)
 - [JDK 8](http://www.oracle.com)
@@ -11,13 +11,19 @@ Samples of Java EE Applications
 
 ### Starting the environment
 
-1. `cd ./src/site/environment` to enter into the directory of the docker-compose.yml file.
+1. `cd ./src/site/environment` to enter into the docker-compose.yml file directory.
 
-2. Run `docker-compose up` to start Wildfly server.
+2. Run `docker-compose up` to start Wildfly server and PostgreSQL database.
 
-3. `./bin/jboss-cli.sh --connect` to launch the command line interface.
+3. Connect in Wildfly server container with `docker exec -it javaee-samples-server /bin/bash` to do the required configurations.
 
-4. On Wildfly CLI `/subsystem=datasources/jdbc-driver=postgresql:add(driver-name=postgresql, driver-module-name=org.postgresql, driver-class-name=org.postgresql.Driver)` and `/subsystem=datasources/data-source=javaeesamplesDS:add(jndi-name=java:/javaeesamplesDS, driver-name=postgresql, user-name=javaeesamples, password=javaeesamples, connection-url=jdbc:postgresql://postgres:5432/javaeesamples)` to create jdbc driver and data source.
+4. `./bin/jboss-cli.sh --connect` to launch the Wildfly command line interface.
+
+5. Add JDBC Driver: `/subsystem=datasources/jdbc-driver=postgresql:add(driver-name=postgresql, driver-module-name=org.postgresql, driver-class-name=org.postgresql.Driver)`
+
+6. Creating dev datasource: `/subsystem=datasources/data-source=javaeesamplesDS:add(jndi-name=java:/javaeesamplesDS, driver-name=postgresql, user-name=javaeesamples, password=@jeedeve17, connection-url=jdbc:postgresql://postgres:5432/javaeesamples)`
+
+7. Creating test datasource: `/subsystem=datasources/data-source=javaeesamplestestDS:add(jndi-name=java:/javaeesamplestestDS, driver-name=postgresql, user-name=javaeesamplestest, password=@jeetest17, connection-url=jdbc:postgresql://postgres:5432/javaeesamplestest)`
 
 #### Building, testing and installing the modules
 

@@ -11,11 +11,9 @@
 	</parent>
 
 	<artifactId>jax-rs-sample</artifactId>
-	<groupId>org.jax.rs.sample</groupId>
-	<version>1.0.0-SNAPSHOT</version>
-
+	
 	<packaging>war</packaging>
-
+	
 	<name>javaee-samples - jax-rs-sample</name>
 
 	<properties>
