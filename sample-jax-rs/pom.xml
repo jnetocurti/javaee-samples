@@ -32,6 +32,18 @@
 			<artifactId>resteasy-jackson2-provider</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>br.com.jnetocurti</groupId>
+			<artifactId>sample-ejb</artifactId>
+			<version>1.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+
 		<!-- TEST DEPENDENCIES -->
 		<dependency>
 			<groupId>org.jboss.resteasy</groupId>

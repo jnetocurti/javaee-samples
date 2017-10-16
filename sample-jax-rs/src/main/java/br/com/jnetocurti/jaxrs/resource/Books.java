@@ -1,8 +1,6 @@
-package br.com.jnetocurti.jaxrs.endpoint;
+package br.com.jnetocurti.jaxrs.resource;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -14,10 +12,13 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
+import br.com.jnetocurti.ejb.BookServiceBean;
 import br.com.jnetocurti.jaxrs.dto.BookDTO;
+import br.com.jnetocurti.jpa.model.Book;
 
 @Path(value = "library")
 @Consumes(value = MediaType.APPLICATION_JSON)
@@ -26,64 +27,59 @@ public class Books {
 
 	@Context
 	private UriInfo uriInfo;
-
-	private static int next = 1;
-
-	private static List<BookDTO> books = new ArrayList<>();
+	
+	@EJB
+	private BookServiceBean serviceBean; 
 
 	@GET
 	@Path("/books")
 	public Response read() {
 
-		return Response.ok(books).build();
+		return Response.ok(serviceBean.listAllBooks()).build();
 	}
 
 	@GET
 	@Path("/books/{id}")
-	public Response read(@PathParam("id") int id) {
+	public Response read(@PathParam("id") Long id) {
 
-		BookDTO book = books.get(books.indexOf(BookDTO.builder().withId(id)
-				.build()));
+		Book book = serviceBean.findBookById(id);
 
-		return Response.ok(book).build();
+		if (book == null) {
+			return Response.noContent().status(Status.NOT_FOUND).build();
+		}
+
+		return Response.ok(serviceBean.findBookById(id)).build();
 	}
 
 	@POST
 	@Path("/books")
-	public Response create(BookDTO book) {
+	public Response create(BookDTO bookDTO) {
 
-		int id = next++;
-
-		book.setId(id);
-		books.add(book);
+		Book book = serviceBean.saveBook(BookDTO.tooEntity(bookDTO));
 
 		UriBuilder builder = uriInfo.getAbsolutePathBuilder();
-		builder.path(Integer.toString(id));
+		builder.path(Long.toString(book.getId()));
 
 		return Response.created(builder.build()).build();
 	}
 
 	@PUT
 	@Path("/books/{id}")
-	public Response update(@PathParam("id") int id, BookDTO req) {
+	public Response update(@PathParam("id") Long id, BookDTO bookDTO) {
 
-		BookDTO book = books.get(books.indexOf(BookDTO.builder().withId(id)
-				.build()));
+		Book book = BookDTO.tooEntity(bookDTO);
+		book.setId(id);
 
-		book.setTitle(req.getTitle());
-		book.setAuthor(req.getAuthor());
+		serviceBean.saveBook(book);
 
 		return Response.noContent().build();
 	}
 
 	@DELETE
 	@Path("/books/{id}")
-	public Response delete(@PathParam("id") int id) {
+	public Response delete(@PathParam("id") Long id) {
 
-		BookDTO book = books.get(books.indexOf(BookDTO.builder().withId(id)
-				.build()));
-
-		books.remove(book);
+		serviceBean.removeBook(id);
 
 		return Response.noContent().build();
 	}

@@ -1,10 +1,12 @@
 package br.com.jnetocurti.jaxrs.dto;
 
-import javax.annotation.Generated;
+import org.modelmapper.ModelMapper;
+
+import br.com.jnetocurti.jpa.model.Book;
 
 public class BookDTO {
 
-	private int id;
+	private Long id;
 
 	private String title;
 
@@ -13,18 +15,11 @@ public class BookDTO {
 	public BookDTO() {
 	}
 
-	@Generated("SparkTools")
-	private BookDTO(Builder builder) {
-		this.id = builder.id;
-		this.title = builder.title;
-		this.author = builder.author;
-	}
-
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -44,68 +39,11 @@ public class BookDTO {
 		this.author = author;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + id;
-		return result;
-	}
+	public static Book tooEntity(BookDTO dto) {
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		BookDTO other = (BookDTO) obj;
-		if (id != other.id)
-			return false;
-		return true;
-	}
+		ModelMapper mapper = new ModelMapper();
 
-	/**
-	 * Creates builder to build {@link BookDTO}.
-	 * 
-	 * @return created builder
-	 */
-	@Generated("SparkTools")
-	public static Builder builder() {
-		return new Builder();
-	}
-
-	/**
-	 * Builder to build {@link BookDTO}.
-	 */
-	@Generated("SparkTools")
-	public static final class Builder {
-		private int id;
-		private String title;
-		private String author;
-
-		private Builder() {
-		}
-
-		public Builder withId(int id) {
-			this.id = id;
-			return this;
-		}
-
-		public Builder withTitle(String title) {
-			this.title = title;
-			return this;
-		}
-
-		public Builder withAuthor(String author) {
-			this.author = author;
-			return this;
-		}
-
-		public BookDTO build() {
-			return new BookDTO(this);
-		}
+		return mapper.map(dto, Book.class);
 	}
 
 }

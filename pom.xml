@@ -147,14 +147,6 @@
 					<groupId>org.wildfly.plugins</groupId>
 					<artifactId>wildfly-maven-plugin</artifactId>
 					<version>1.2.0.Final</version>
-					<executions>
-						<execution>
-							<phase>install</phase>
-							<goals>
-								<goal>deploy</goal>
-							</goals>
-						</execution>
-					</executions>
 					<configuration>
 						<hostname>localhost</hostname>
 						<port>9990</port>

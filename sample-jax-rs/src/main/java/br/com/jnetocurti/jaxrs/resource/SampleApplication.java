@@ -1,9 +1,8 @@
-package br.com.jnetocurti.jaxrs.endpoint;
+package br.com.jnetocurti.jaxrs.resource;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
-@ApplicationPath(value = "rest")
+@ApplicationPath("/rest")
 public class SampleApplication extends Application {
-
 }

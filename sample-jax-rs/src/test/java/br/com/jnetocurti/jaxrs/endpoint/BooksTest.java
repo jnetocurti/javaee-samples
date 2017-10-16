@@ -16,22 +16,50 @@ import org.jboss.arquillian.extension.rest.client.ArquillianResteasyResource;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.junit.InSequence;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.ClassLoaderAsset;
+import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import br.com.jnetocurti.jaxrs.dto.BookDTO;
+import br.com.jnetocurti.jaxrs.resource.Books;
 
 @RunWith(Arquillian.class)
 public class BooksTest {
 
 	private static final String BOOKS_PATH = "library/books";
-
+	
 	@Deployment
 	public static WebArchive createDeployment() {
 
-		return ShrinkWrap.create(WebArchive.class).addClasses(
-				SampleApplication.class, Books.class, BookDTO.class);
+		WebArchive archive = ShrinkWrap
+				.create(WebArchive.class)
+				.addPackages(true, Books.class.getPackage(), BookDTO.class.getPackage());
+
+		JavaArchive javaArchive = Maven.resolver()
+				.loadPomFromFile("pom.xml").resolve("br.com.jnetocurti:sample-ejb:1.0")
+				.withoutTransitivity().asSingle(JavaArchive.class);
+
+		archive.addAsLibraries(javaArchive);
+
+		javaArchive = Maven.resolver()
+				.loadPomFromFile("pom.xml").resolve("br.com.jnetocurti:sample-jpa:1.0")
+				.withoutTransitivity().asSingle(JavaArchive.class);
+
+		javaArchive.delete("/META-INF/persistence.xml");
+		javaArchive.add(new ClassLoaderAsset("META-INF/persistence-test.xml"), "/META-INF/persistence.xml");
+
+		archive.addAsLibraries(javaArchive);
+		
+		javaArchive = Maven.resolver()
+				.loadPomFromFile("pom.xml").resolve("org.modelmapper:modelmapper:1.1.1")
+				.withoutTransitivity().asSingle(JavaArchive.class);
+
+		archive.addAsLibraries(javaArchive);
+
+		return archive;
 	}
 
 	@Test
@@ -39,12 +67,13 @@ public class BooksTest {
 	@InSequence(1)
 	public void createTest(@ArquillianResteasyResource WebTarget webTarget) {
 
-		BookDTO book = BookDTO.builder().withTitle("Titulo")
-				.withAuthor("Autor").build();
+		BookDTO bookDTO = new BookDTO();
+		bookDTO.setTitle("Titulo");
+		bookDTO.setAuthor("Autor");
 
 		Response response = webTarget.path(BOOKS_PATH).request()
-				.post(Entity.json(book));
-
+				.post(Entity.json(bookDTO));
+		
 		assertEquals(201, response.getStatus());
 	}
 
@@ -62,7 +91,6 @@ public class BooksTest {
 
 		assertNotNull(books);
 		assertEquals(1, books.size());
-		assertEquals(1, books.get(0).getId());
 		assertEquals("Titulo", books.get(0).getTitle());
 		assertEquals("Autor", books.get(0).getAuthor());
 		assertEquals(200, response.getStatus());
@@ -73,11 +101,13 @@ public class BooksTest {
 	@InSequence(3)
 	public void updateTest(@ArquillianResteasyResource WebTarget webTarget) {
 
-		BookDTO book = BookDTO.builder().withTitle("Titulo altered")
-				.withAuthor("Autor altered").build();
+		BookDTO book = new BookDTO();
+		book.setTitle("Titulo altered");
+		book.setAuthor("Autor altered");
 
 		Response response = webTarget.path(BOOKS_PATH)
-				.path(Integer.toString(1)).request().put(Entity.json(book));
+				.path(getBookId(webTarget).toString()).request()
+				.put(Entity.json(book));
 
 		assertEquals(204, response.getStatus());
 	}
@@ -93,7 +123,6 @@ public class BooksTest {
 		BookDTO book = response.readEntity(BookDTO.class);
 
 		assertNotNull(book);
-		assertEquals(1, book.getId());
 		assertEquals("Titulo altered", book.getTitle());
 		assertEquals("Autor altered", book.getAuthor());
 		assertEquals(200, response.getStatus());
@@ -105,7 +134,7 @@ public class BooksTest {
 	public void deleteTest(@ArquillianResteasyResource WebTarget webTarget) {
 
 		Response response = webTarget.path(BOOKS_PATH)
-				.path(Integer.toString(1)).request().delete();
+				.path(getBookId(webTarget).toString()).request().delete();
 
 		assertEquals(204, response.getStatus());
 	}
@@ -124,6 +153,17 @@ public class BooksTest {
 
 		assertNotNull(books);
 		assertEquals(0, books.size());
+	}
+	
+	private Long getBookId(WebTarget webTarget) {
+
+		Response response = webTarget.path(BOOKS_PATH).request().get();
+
+		final List<BookDTO> books = response
+				.readEntity(new GenericType<List<BookDTO>>() {
+				});
+		
+		return books.get(0).getId();
 	}
 
 }
