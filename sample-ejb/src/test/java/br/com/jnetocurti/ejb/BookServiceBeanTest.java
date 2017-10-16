@@ -45,7 +45,7 @@ public class BookServiceBeanTest {
 		
 		JavaArchive jpa = Maven.resolver()
 				.loadPomFromFile("pom.xml")
-				.resolve("br.com.jnetocurti:jpa-sample:1.0")
+				.resolve("br.com.jnetocurti:sample-jpa:1.0")
 				.withoutTransitivity().asSingle(JavaArchive.class);
 
 		jpa.delete("/META-INF/persistence.xml");

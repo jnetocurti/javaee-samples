@@ -17,6 +17,7 @@
 		<module>sample-jpa</module>
 		<module>sample-ejb</module>
 		<module>sample-jax-rs</module>
+		<module>javaee-samples-ear</module>
 	</modules>
 
 	<properties>
@@ -146,6 +147,14 @@
 					<groupId>org.wildfly.plugins</groupId>
 					<artifactId>wildfly-maven-plugin</artifactId>
 					<version>1.2.0.Final</version>
+					<executions>
+						<execution>
+							<phase>install</phase>
+							<goals>
+								<goal>deploy</goal>
+							</goals>
+						</execution>
+					</executions>
 					<configuration>
 						<hostname>localhost</hostname>
 						<port>9990</port>

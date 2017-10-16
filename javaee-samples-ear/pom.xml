@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<artifactId>javaee-samples</artifactId>
+		<groupId>br.com.jnetocurti</groupId>
+		<version>1.0</version>
+	</parent>
+
+	<artifactId>javaee-samples-ear</artifactId>
+
+	<name>javaee-samples - javaee-samples-ear</name>
+
+	<packaging>ear</packaging>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>br.com.jnetocurti</groupId>
+			<artifactId>sample-jpa</artifactId>
+			<version>1.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>br.com.jnetocurti</groupId>
+			<artifactId>sample-ejb</artifactId>
+			<version>1.0</version>
+			<type>ejb</type>
+		</dependency>
+
+		<dependency>
+			<groupId>br.com.jnetocurti</groupId>
+			<artifactId>sample-jax-rs</artifactId>
+			<version>1.0</version>
+			<type>war</type>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<finalName>javaee-samples-ear</finalName>
+		<plugins>
+			<plugin>
+				<artifactId>maven-ear-plugin</artifactId>
+				<configuration>
+					<modules>
+						<ejbModule>
+							<groupId>br.com.jnetocurti</groupId>
+							<artifactId>sample-ejb</artifactId>
+						</ejbModule>
+						<webModule>
+							<groupId>br.com.jnetocurti</groupId>
+							<artifactId>sample-jax-rs</artifactId>
+						</webModule>
+					</modules>
+					<defaultLibBundleDir>lib</defaultLibBundleDir>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.wildfly.plugins</groupId>
+				<artifactId>wildfly-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+</project>
