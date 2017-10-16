@@ -10,11 +10,11 @@
 		<version>1.0</version>
 	</parent>
 
-	<artifactId>jax-rs-sample</artifactId>
-	
+	<artifactId>sample-jax-rs</artifactId>
+
 	<packaging>war</packaging>
-	
-	<name>javaee-samples - jax-rs-sample</name>
+
+	<name>javaee-samples - sample-jax-rs</name>
 
 	<properties>
 		<failOnMissingWebXml>false</failOnMissingWebXml>
@@ -99,7 +99,7 @@
 	</dependencyManagement>
 
 	<build>
-		<finalName>jax-rs-sample</finalName>
+		<finalName>sample-jax-rs</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
