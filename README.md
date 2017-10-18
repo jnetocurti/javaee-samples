@@ -17,19 +17,13 @@ Samples of Java EE Applications
 
 3. Connect in Wildfly server container with `docker exec -it javaee-samples-server /bin/bash` to do the required configurations.
 
-4. `./bin/jboss-cli.sh --connect` to launch the Wildfly command line interface.
-
-5. Add JDBC Driver: `/subsystem=datasources/jdbc-driver=postgresql:add(driver-name=postgresql, driver-module-name=org.postgresql, driver-class-name=org.postgresql.Driver)`
-
-6. Creating dev datasource: `/subsystem=datasources/data-source=javaeesamplesDS:add(jndi-name=java:/javaeesamplesDS, driver-name=postgresql, user-name=javaeesamples, password=@jeedeve17, connection-url=jdbc:postgresql://postgres:5432/javaeesamples)`
-
-7. Creating test datasource: `/subsystem=datasources/data-source=javaeesamplestestDS:add(jndi-name=java:/javaeesamplestestDS, driver-name=postgresql, user-name=javaeesamplestest, password=@jeetest17, connection-url=jdbc:postgresql://postgres:5432/javaeesamplestest)`
+4. `./bin/jboss-cli.sh --file=./standalone/tmp/commands.cli` to configure JDBC Drivers, Datasources, JMS and Mail.
 
 #### Building, testing and installing the modules
 
 `mvn clean install`
 
-#### Deployment jax-rs-sample application
+#### Deployment of applications in javaee-samples-ear
 
 `mvn wildfly:deploy`
 

@@ -48,11 +48,13 @@
 	</dependencies>
 
 	<build>
-		<finalName>javaee-samples-ear</finalName>
+		<finalName>javaee-samples</finalName>
 		<plugins>
 			<plugin>
 				<artifactId>maven-ear-plugin</artifactId>
 				<configuration>
+					<finalName>javaee-samples</finalName>
+					<defaultLibBundleDir>lib</defaultLibBundleDir>
 					<modules>
 						<ejbModule>
 							<groupId>br.com.jnetocurti</groupId>
@@ -67,7 +69,6 @@
 							<artifactId>sample-jax-rs</artifactId>
 						</webModule>
 					</modules>
-					<defaultLibBundleDir>lib</defaultLibBundleDir>
 				</configuration>
 			</plugin>
 			<plugin>

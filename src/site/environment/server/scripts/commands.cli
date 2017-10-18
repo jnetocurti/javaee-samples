@@ -1,4 +1,4 @@
-/connect
+connect
 
 /subsystem=datasources/jdbc-driver=postgresql:add(driver-name=postgresql, driver-module-name=org.postgresql, driver-class-name=org.postgresql.Driver)
 
@@ -7,9 +7,3 @@
 /subsystem=datasources/data-source=javaeesamplestestDS:add(jndi-name=java:/javaeesamplestestDS, driver-name=postgresql, user-name=javaeesamplestest, password=@jeetest17, connection-url=jdbc:postgresql://postgres:5432/javaeesamplestest)
 
 jms-queue add --queue-address=booksQueue --entries=java:/jms/queue/booksQueue
-
-
-
-
-
-
