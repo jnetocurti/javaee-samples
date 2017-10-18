@@ -10,30 +10,13 @@
 		<version>1.0</version>
 	</parent>
 
-	<artifactId>sample-ejb</artifactId>
+	<artifactId>sample-jms</artifactId>
 
-	<name>javaee-samples - sample-ejb</name>
+	<name>javaee-samples - sample-jms</name>
 
 	<packaging>ejb</packaging>
 
-	<dependencies>
-	
-		<dependency>
-			<groupId>br.com.jnetocurti</groupId>
-			<artifactId>sample-jpa</artifactId>
-			<version>1.0</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>br.com.jnetocurti</groupId>
-			<artifactId>sample-jms</artifactId>
-			<version>1.0</version>
-		</dependency>
-		
-	</dependencies>
-
 	<build>
-		<finalName>sample-ejb</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

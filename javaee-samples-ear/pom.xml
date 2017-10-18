@@ -26,6 +26,13 @@
 
 		<dependency>
 			<groupId>br.com.jnetocurti</groupId>
+			<artifactId>sample-jms</artifactId>
+			<version>1.0</version>
+			<type>ejb</type>
+		</dependency>
+
+		<dependency>
+			<groupId>br.com.jnetocurti</groupId>
 			<artifactId>sample-ejb</artifactId>
 			<version>1.0</version>
 			<type>ejb</type>
@@ -47,6 +54,10 @@
 				<artifactId>maven-ear-plugin</artifactId>
 				<configuration>
 					<modules>
+						<ejbModule>
+							<groupId>br.com.jnetocurti</groupId>
+							<artifactId>sample-jms</artifactId>
+						</ejbModule>
 						<ejbModule>
 							<groupId>br.com.jnetocurti</groupId>
 							<artifactId>sample-ejb</artifactId>

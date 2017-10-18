@@ -8,4 +8,4 @@ RUN ./bin/add-user.sh admin admin --silent
 
 # TODO -> execute ./scripts/datasource.cli via jboss-cli.sh
 
-CMD ["./bin/standalone.sh", "-b", "0.0.0.0", "-bmanagement", "0.0.0.0"]
+CMD ["./bin/standalone.sh", "--server-config", "standalone-full.xml", "-b", "0.0.0.0", "-bmanagement", "0.0.0.0"]

@@ -5,6 +5,7 @@ import java.util.Collection;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
+import br.com.jnetocurti.jms.BookMessageSender;
 import br.com.jnetocurti.jpa.model.Book;
 import br.com.jnetocurti.jpa.repository.BookRepository;
 
@@ -13,12 +14,19 @@ public class BookServiceBeanImpl implements BookServiceBean {
 
 	@Inject
 	private BookRepository bookRepository;
+	
+	@Inject
+	private BookMessageSender bookMessageSender; 
 
 	@Override
 	public Book saveBook(Book book) {
 
 		if (book.getId() == null) {
+			
 			bookRepository.save(book);
+			
+			bookMessageSender.send(book.getTitle());
+			
 		} else {
 			bookRepository.update(book);
 		}
